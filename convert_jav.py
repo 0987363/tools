@@ -2,13 +2,8 @@
 
 import os, sys, re
 
-dir = sys.argv[1]
-if os.path.split(dir)[1] != '':
-    dir = dir + '/'
 
-names = {}
-
-def splitFile(file):
+def splitFile(file, names):
     if re.match('^\.', file) :
         return
 
@@ -34,7 +29,7 @@ def splitFile(file):
 
     print name + '-' + code, ":", file
 
-def start():
+def start(names):
     for key, value in names.items() :
         print 'mkdir:', key
         os.system('mkdir "' + key + '"')
@@ -42,9 +37,19 @@ def start():
             print 'mv', item
             os.system('mv "' + item + '" "' + key + '"')
 
-list = os.listdir(dir)
-for file in list:
-    print file
-    splitFile(file)
 
-start()
+for dir in sys.argv:
+    if dir == sys.argv[0]:
+        continue
+
+    names = {}
+    if os.path.split(dir)[1] != '':
+        dir = dir + '/'
+
+    list = os.listdir(dir)
+
+    for file in list:
+        print file
+        splitFile(file, names)
+
+    start(names)
