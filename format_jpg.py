@@ -14,27 +14,22 @@ def splitFile(file, names):
         return
 
     file = file.upper().strip()
-    m = re.match('^([A-Z]+)-?(\d+)[^abcde123456ABCDEF]*(.*)(\.[a-zA-Z4]+)$', file)
+    m = re.match('^([A-Z]+)-?(\d+).*(\.[a-zA-Z4]+)$', file)
     if not m :
         print 'jump:', file
         return
-    name, code, index, t = m.groups()
+    name, code, t = m.groups()
+    t = t.lower()
+    if t != '.jpg':
+        return
     if len(code) > 3:
         if code[:1] == '0':
             code = code[-3:]
 
-    new = re.sub('^([A-Za-z]+-?\d+)', name + '-' + code + ' ', file) 
-    t = t.lower()
-    if t != '.jpg':
-        return
-
-    if index:
-        index = ' ' + index
-
-    print 'new name:', name + '-' + code + index + t 
+    print 'new name:', name + '-' + code + t 
 
 #    print 'new name:', new
-    names[path] = name + '-' + code + index + t
+    names[path] = name + '-' + code + t
 
 
 def start(names):
@@ -54,7 +49,7 @@ for dir in sys.argv:
     list = os.listdir(dir)
 
     for file in list:
-       # print 'start split:', file
+        #print 'start split:', file
         splitFile(file, names)
 
-    #start(names)
+    start(names)
