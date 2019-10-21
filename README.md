@@ -1,6 +1,4 @@
-# tools
+# 批量分割ape、flac、wav整轨为分轨
 
 
-convert_jav创建编号目录，把当前文件的视频移动进去，配合JAVMovieScraper使用
-./convert_jav.py ~/nfs/hv/julia/
 
